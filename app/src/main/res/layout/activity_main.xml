@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/on_boarding"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipToOutline="true"
+    android:background="#8F68FB"
+    >
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+         />
+
+    <ImageView
+        android:layout_width="65dp"
+        android:layout_height="55dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="127dp"
+        android:layout_marginTop="53dp"
+        android:adjustViewBounds="false"
+        android:cropToPadding="true"
+        android:src="@mipmap/ic_videohome" />
+
+    <ImageView
+        android:layout_width="65dp"
+        android:layout_height="55dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="253dp"
+        android:layout_marginTop="89dp"
+        android:src="@mipmap/ic_dochome" />
+
+    <ImageView
+        android:layout_width="65dp"
+        android:layout_height="55dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="75dp"
+        android:layout_marginTop="155dp"
+        android:src="@mipmap/ic_musichome" />
+
+    <ImageView
+        android:layout_width="65dp"
+        android:layout_height="55dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="241dp"
+        android:layout_marginTop="171dp"
+        android:src="@mipmap/ic_picturehome" />
+
+    <ImageView
+        android:layout_width="274dp"
+        android:layout_height="167dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="71dp"
+        android:layout_marginTop="217dp"
+        android:src="@mipmap/ic_folderhome" />
+
+    <ImageView
+        android:layout_width="188dp"
+        android:layout_height="160dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="52dp"
+        android:layout_marginTop="253dp"
+        android:src="@mipmap/ic_cloudhome" />
+
+    <TextView
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="393dp"
+        android:text="Manage your files in a simple way"
+        android:textFontWeight="1000"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="25sp" />
+
+    <TextView
+        android:id="@+id/you_could_i"
+        android:layout_width="281dp"
+        android:layout_height="57dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="72dp"
+        android:layout_marginTop="508dp"
+        android:gravity="center_horizontal|top"
+        android:lineSpacingExtra="1sp"
+        android:text="You could integrate your local files with the files in cloud storage"
+        android:textColor="@color/white"
+        android:translationY="-0.54sp" />
+
+    <ImageButton
+        android:id="@+id/startButton"
+        android:layout_width="61dp"
+        android:layout_height="61dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="63.5dp"
+        android:layout_marginTop="597dp"
+        android:background="@drawable/round_background"
+        android:contentDescription="@string/start"
+        android:src="@mipmap/ic_next" />
+
+</RelativeLayout>
