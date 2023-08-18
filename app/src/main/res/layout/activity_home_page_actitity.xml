@@ -1,34 +1,204 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".HomePageActivity">
+    android:orientation="vertical"
+    android:weightSum="12"
+    android:background="@color/white"
+    tools:context=".HomeAcitivity">
+    <!-- Search-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1.5">
 
-    <TextView
-        android:id="@+id/good_mornin"
-        android:layout_width="105dp"
-        android:layout_height="36dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:gravity="top"
-        android:letterSpacing="0.05"
-        android:lineSpacingExtra="2sp"
-        android:text="@string/good_morning"
-        android:textColor="#000000"
-        android:textSize="12sp"
-        android:translationY="-0.8sp"
-        tools:layout_editor_absoluteX="6dp"
-        tools:layout_editor_absoluteY="16dp" />
+        <TextView
+            android:layout_width="192dp"
+            android:layout_height="78dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="32dp"
+            android:layout_marginTop="16dp"
+            android:text="Good morning Alice"
+            android:textColor="@color/black"
+            android:textSize="30sp" />
 
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@android:drawable/ic_menu_recent_history"
-        tools:layout_editor_absoluteX="65dp"
-        tools:layout_editor_absoluteY="36dp" />
+        <SearchView
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginRight="32dp"
+            android:layout_marginBottom="32dp" />
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_weight="5"
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
+
+        <TextView
+            android:id="@+id/tvDungLuongMay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="32dp"
+            android:layout_marginTop="30dp"
+            android:text="289 GB"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvDungLuongMay"
+            android:layout_marginLeft="32dp"
+            android:text="Free"
+            android:textColor="#494848"
+            />
+
+        <TextView
+            android:id="@+id/tvDungLuongDaDung"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="260dp"
+            android:layout_marginRight="32dp"
+            android:text="178 GB"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvDungLuongDaDung"
+            android:layout_alignParentRight="true"
+            android:layout_alignLeft="@id/tvDungLuongDaDung"
+            android:text="Used"
+            android:textColor="#494848"
+            />
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_weight="2.5"
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
+        <TextView
+            android:id="@+id/category"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="32dp"
+            android:layout_marginTop="16dp"
+            android:text="Category"
+            android:textColor="@color/black"
+            android:textSize="28sp" />
+
+        <ImageButton
+            android:id="@+id/btn_doc"
+            android:layout_width="64dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="32dp"
+            android:layout_marginTop="64dp"
+            android:backgroundTint="#EBF8EC"
+            android:src="@mipmap/ic_button_doc" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/btn_doc"
+            android:layout_alignLeft="@id/btn_doc"
+            android:text="Document"
+            />
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <ImageButton
+            android:id="@+id/btn_image"
+            android:layout_width="64dp"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@id/btn_doc"
+            android:layout_marginLeft="96dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="64dp"
+            android:backgroundTint="#EBF2F8"
+            android:src="@mipmap/ic_button_image" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/btn_image"
+            android:layout_alignLeft="@id/btn_image"
+            android:layout_marginLeft="13dp"
+            android:text="Image"
+            />
+
+        <ImageButton
+            android:id="@+id/btn_video"
+            android:layout_width="64dp"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_button_video"
+            android:layout_alignLeft="@id/btn_image"
+            android:layout_marginLeft="96dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="64dp"
+            android:backgroundTint="#F8EBF4"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/btn_video"
+            android:layout_alignLeft="@id/btn_video"
+            android:layout_marginLeft="14dp"
+            android:text="Video"
+            />
+
+        <ImageButton
+            android:id="@+id/btn_music"
+            android:layout_width="64dp"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_button_music"
+            android:layout_alignLeft="@id/btn_video"
+            android:layout_marginLeft="96dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="64dp"
+            android:backgroundTint="#F8F3EB"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/btn_music"
+            android:layout_alignLeft="@id/btn_music"
+            android:layout_marginLeft="13dp"
+            android:text="Music"
+            />
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_weight="3"
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
+        <TextView
+            android:id="@+id/recent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="32dp"
+            android:layout_marginTop="16dp"
+            android:text="Recent"
+            android:textColor="@color/black"
+            android:textSize="28sp" />
+
+    </RelativeLayout>
+
+</LinearLayout>
+
