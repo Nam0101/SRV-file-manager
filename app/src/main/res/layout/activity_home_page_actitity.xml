@@ -5,9 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:weightSum="12"
     android:background="@color/white"
-    tools:context=".HomeAcitivity">
+    tools:context=".HomePageActivity">
     <!-- Search-->
     <RelativeLayout
         android:layout_width="match_parent"
@@ -42,6 +41,34 @@
         android:layout_width="match_parent"
         android:layout_height="0dp">
 
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            style="@style/CircularDeterminateProgressBar"
+            android:layout_width="250dp"
+            android:layout_height="250dp"
+            android:layout_centerInParent="true"
+            android:indeterminateOnly="false"
+            android:progress="60"
+            android:progressDrawable="@drawable/circle"
+            android:rotation="-90"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:progress="10" />
+        <TextView
+            android:id="@+id/text_view_progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            app:layout_constraintBottom_toBottomOf="@+id/progress_bar"
+            app:layout_constraintEnd_toEndOf="@+id/progress_bar"
+            app:layout_constraintStart_toStartOf="@+id/progress_bar"
+            app:layout_constraintTop_toTopOf="@+id/progress_bar"
+            tools:text="60%"
+            android:textSize="50sp"
+            android:textColor="#8459FD"
+            android:layout_centerInParent="true"/>
         <TextView
             android:id="@+id/tvDungLuongMay"
             android:layout_width="wrap_content"
@@ -52,7 +79,7 @@
             android:layout_marginTop="30dp"
             android:text="289 GB"
             android:textColor="@color/black"
-            android:textSize="15sp"
+            android:textSize="17sp"
             android:textStyle="bold" />
 
         <TextView
@@ -74,7 +101,7 @@
             android:layout_marginRight="32dp"
             android:text="178 GB"
             android:textColor="@color/black"
-            android:textSize="15sp"
+            android:textSize="17sp"
             android:textStyle="bold" />
 
         <TextView
@@ -199,6 +226,34 @@
             android:textSize="28sp" />
 
     </RelativeLayout>
+    <LinearLayout
+        android:layout_weight="0.3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center">
 
+        <ImageButton
+            android:id="@+id/btnHome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_home"
+            android:layout_marginRight="32dp"
+            android:background="@color/white"/>
+
+        <ImageButton
+            android:id="@+id/btnFolder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_folder_home"
+            android:layout_marginRight="32dp"
+            android:background="@color/white"/>
+
+        <ImageButton
+            android:id="@+id/btnCloud"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_cloud_fill"
+            android:background="@color/white"
+            />
+    </LinearLayout>
 </LinearLayout>
-
