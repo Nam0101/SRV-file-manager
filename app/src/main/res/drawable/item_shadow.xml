@@ -1,0 +1,16 @@
+<!-- res/drawable/item_shadow.xml -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Màu nền mặc định cho item -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="#FFFFFF" /> <!-- Màu nền mặc định -->
+        </shape>
+    </item>
+    <!-- Đổ bóng đen nhẹ -->
+    <item android:right="1dp" android:left="1dp" android:top="1dp" android:bottom="1dp">
+        <shape android:shape="rectangle">
+            <solid android:color="#22000000" /> <!-- Màu đen nhẹ -->
+            <corners android:radius="4dp" /> <!-- Góc bo tròn -->
+        </shape>
+    </item>
+</layer-list>

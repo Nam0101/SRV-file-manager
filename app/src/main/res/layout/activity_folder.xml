@@ -1,37 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".FolderActivity">
-    <TextView
-        android:id="@+id/Folder"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="32dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginBottom="26dp"
-        android:text="Folder"
-        android:textColor="@color/black"
-        android:textSize="30sp" />
-    <view class="androidx.appcompat.app.AlertController$RecycleListView"
-        android:id="@+id/folderList"
+    >
+    <data>
+        <variable
+            name="FilesAndFoldersListViewModel"
+            type="com.example.srvfilemanager.viewmodels.FilesAndFoldersListViewModel" />
+    </data>
+    <RelativeLayout
+        android:background="#FAFAFA"
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/Folder"
-        />
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="16dp"
-        android:layout_alignParentBottom="true"
-        android:background="@android:color/transparent"
-        android:layout_marginBottom="32dp"
-        android:src="@mipmap/ic_add"
-       />
-</RelativeLayout>
+        tools:context=".ui.FolderActivity">
+        <TextView
+            android:id="@+id/Folder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="32dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginBottom="26dp"
+            android:text="Folder"
+            android:textColor="@color/black"
+            android:textSize="30sp" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/folderList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/Folder"
+
+            />
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="16dp"
+            android:layout_alignParentBottom="true"
+            android:background="@android:color/transparent"
+            android:layout_marginBottom="32dp"
+            android:src="@mipmap/ic_add"
+            />
+    </RelativeLayout>
+</layout>
