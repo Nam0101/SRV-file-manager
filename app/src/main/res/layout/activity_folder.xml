@@ -18,19 +18,20 @@
         android:text="Folder"
         android:textColor="@color/black"
         android:textSize="30sp" />
-    <ListView
+    <view class="androidx.appcompat.app.AlertController$RecycleListView"
         android:id="@+id/folderList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/Folder"
         />
-    <Button
+    <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_marginRight="16dp"
         android:layout_alignParentBottom="true"
+        android:background="@android:color/transparent"
         android:layout_marginBottom="32dp"
-        android:backgroundTint="@color/primary"
-        android:text="ADD"/>
+        android:src="@mipmap/ic_add"
+       />
 </RelativeLayout>

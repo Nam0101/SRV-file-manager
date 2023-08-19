@@ -70,7 +70,7 @@
             android:textColor="#8459FD"
             android:layout_centerInParent="true"/>
         <TextView
-            android:id="@+id/tvDungLuongMay"
+            android:id="@+id/tv_free_storage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
@@ -85,14 +85,14 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/tvDungLuongMay"
+            android:layout_below="@id/tv_free_storage"
             android:layout_marginLeft="32dp"
             android:text="Free"
             android:textColor="#494848"
             />
 
         <TextView
-            android:id="@+id/tvDungLuongDaDung"
+            android:id="@+id/tv_used_storage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
@@ -107,9 +107,9 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/tvDungLuongDaDung"
+            android:layout_below="@id/tv_used_storage"
             android:layout_alignParentRight="true"
-            android:layout_alignLeft="@id/tvDungLuongDaDung"
+            android:layout_alignLeft="@id/tv_used_storage"
             android:text="Used"
             android:textColor="#494848"
             />

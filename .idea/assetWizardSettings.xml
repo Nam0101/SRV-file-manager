@@ -24,7 +24,7 @@
                                             <option name="values">
                                               <map>
                                                 <entry key="color" value="000000" />
-                                                <entry key="imagePath" value="C:\Users\os\AppData\Local\Temp\ic_android_black_24dp.xml" />
+                                                <entry key="imagePath" value="C:\Users\NamNV\AppData\Local\Temp\ic_android_black_24dp.xml" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -67,7 +67,7 @@
                                           <PersistentState>
                                             <option name="values">
                                               <map>
-                                                <entry key="imagePath" value="C:\Users\os\AppData\Local\Temp\ic_android_black_24dp.xml" />
+                                                <entry key="imagePath" value="C:\Users\NamNV\AppData\Local\Temp\ic_android_black_24dp.xml" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -79,7 +79,7 @@
                                             <option name="values">
                                               <map>
                                                 <entry key="color" value="000000" />
-                                                <entry key="imagePath" value="D:\Icon\ic_document (2).svg" />
+                                                <entry key="imagePath" value="D:\" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -127,8 +127,19 @@
                                           <PersistentState>
                                             <option name="values">
                                               <map>
-                                                <entry key="color" value="000000" />
-                                                <entry key="imagePath" value="C:\Users\os\AppData\Local\Temp\ic_android_black_24dp.xml" />
+                                                <entry key="color" value="e2dede" />
+                                                <entry key="imagePath" value="C:\Users\NamNV\AppData\Local\Temp\baseline_add_24.xml" />
+                                              </map>
+                                            </option>
+                                          </PersistentState>
+                                        </value>
+                                      </entry>
+                                      <entry key="clipartAsset">
+                                        <value>
+                                          <PersistentState>
+                                            <option name="values">
+                                              <map>
+                                                <entry key="url" value="jar:file:/C:/Users/NamNV/AppData/Local/Programs/Android%20Studio/plugins/android/lib/android.jar!/images/material/icons/materialicons/add/baseline_add_24.xml" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -140,7 +151,7 @@
                                             <option name="values">
                                               <map>
                                                 <entry key="color" value="000000" />
-                                                <entry key="imagePath" value="D:\Icon\IC_Cloud FILL.svg" />
+                                                <entry key="imagePath" value="D:\Dowload from chrome\Ellipse 6.svg" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -172,12 +183,11 @@
                                   </option>
                                   <option name="values">
                                     <map>
-                                      <entry key="assetType" value="IMAGE" />
                                       <entry key="backgroundColor" value="8d64fe" />
                                       <entry key="cropped" value="true" />
-                                      <entry key="iconShape" value="NONE" />
-                                      <entry key="imageAsset" value="D:\Icon\IC_Cloud FILL.svg" />
-                                      <entry key="outputName" value="ic_cloud_fill" />
+                                      <entry key="iconShape" value="CIRCLE" />
+                                      <entry key="imageAsset" value="D:\Dowload from chrome\Ellipse 6.svg" />
+                                      <entry key="outputName" value="ic_add" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -194,7 +204,7 @@
                                             <option name="values">
                                               <map>
                                                 <entry key="color" value="000000" />
-                                                <entry key="imagePath" value="C:\Users\os\AppData\Local\Temp\ic_android_black_24dp.xml" />
+                                                <entry key="imagePath" value="C:\Users\NamNV\AppData\Local\Temp\ic_android_black_24dp.xml" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -258,7 +268,7 @@
                                           <PersistentState>
                                             <option name="values">
                                               <map>
-                                                <entry key="imagePath" value="C:\Users\os\AppData\Local\Temp\ic_android_black_24dp.xml" />
+                                                <entry key="imagePath" value="C:\Users\NamNV\AppData\Local\Temp\ic_android_black_24dp.xml" />
                                               </map>
                                             </option>
                                           </PersistentState>

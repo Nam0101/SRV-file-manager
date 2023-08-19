@@ -18,45 +18,43 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.UUID;
 
+import ultils.StorageHelper;
+
+
 public class HomePageActivity extends AppCompatActivity {
     String TAG ="HomePageActivity";
-    TextView mtvDungLuong,mtvDungLuongDadung,mtvProgress;
+    TextView mtvFreeStorage,mtvUsedStorage,mtvProgress;
     ProgressBar mProgressBar;
     ImageButton mHomeButton;
+    StorageHelper storageHelper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page_actitity);
-        StatFs stat = new StatFs(Environment.getExternalStorageDirectory().getPath());
-        long bytesAvailable = (long)stat.getBlockSize() * (long)stat.getAvailableBlocks();
-        long bytesTotal =(long)stat.getTotalBytes();
-        double megAvailable = (double)bytesAvailable / (1000 * 1000*1000);
-        double megTotal = (double)bytesTotal/(1000*1000*1000);
-        NumberFormat formatter = new DecimalFormat("#0.00");
-        String stringDungLuong = ""+ formatter.format(megAvailable) +" GB";
-        String stringDungLuongDaDung = ""+ formatter.format(megTotal-megAvailable) +" GB";
-        mtvDungLuong=findViewById(R.id.tvDungLuongMay);
-        mtvDungLuongDadung=findViewById(R.id.tvDungLuongDaDung);
-        mtvDungLuong.setText(stringDungLuong);
-        mtvDungLuongDadung.setText(stringDungLuongDaDung);
+        mtvFreeStorage = findViewById(R.id.tv_free_storage);
+        mtvUsedStorage = findViewById(R.id.tv_used_storage);
         mProgressBar = findViewById(R.id.progress_bar);
-        int percent = (int)(100*(megTotal-megAvailable)/megTotal);
-        mProgressBar.setProgress(percent);
         mtvProgress = findViewById(R.id.text_view_progress);
-        mtvProgress.setText(""+percent+"%");
+        mtvProgress = findViewById(R.id.text_view_progress);
         mHomeButton=findViewById(R.id.btnHome);
+        setStorageInfo();
         mHomeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Log.i(TAG,"Button clicked");
             }
         });
-        Log.e(TAG,"Available GB : "+megAvailable);
-        Log.e(TAG,"Total GB: "+ megTotal);
         Log.e(TAG,"Path: "+Environment.getExternalStorageDirectory().getPath());
         Log.i(TAG,"onCreate");
     }
-
+    private void setStorageInfo(){
+        storageHelper = new StorageHelper(Environment.getExternalStorageDirectory().getPath());
+        mtvFreeStorage.setText(storageHelper.getAvailableStorage());
+        mtvUsedStorage.setText(storageHelper.getUsedStorage());
+        mProgressBar.setProgress(storageHelper.getPercent());
+        String percent = ""+storageHelper.getPercent()+"%";
+        mtvProgress.setText(percent);
+    }
     @Override
     protected void onDestroy() {
         super.onDestroy();
