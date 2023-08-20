@@ -56,7 +56,7 @@ public class HomePageViewModel extends BaseObservable {
     }
     public void onClickDocumentFileFilter(){
         Intent intent = new Intent(context, FolderActivity.class);
-        intent.putExtra("filter",".docx,.pdf,.txt");
+        intent.putExtra("filter",".png,.jpg,.srt");
         context.startActivity(intent);
 
     }

@@ -16,30 +16,43 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import ultils.ExtensionFileFilter;
+
 public class FolderActivity extends AppCompatActivity {
     String TAG = "FolderActivity";
     String path;
     FilesAndFoldersListViewModel filesAndFoldersListViewModel;
     ActivityFolderBinding binding;
     RecyclerView recyclerView;
-    String filter;
+    String filterString;
+    ExtensionFileFilter filter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_folder);
-        if (getIntent().hasExtra("filter")) {
-            filter = getIntent().getStringExtra("filter");
-            Log.i(TAG, "onCreate: " + filter);
-        }
         binding = ActivityFolderBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        path = Environment.getExternalStorageDirectory().getAbsolutePath();
-        filesAndFoldersListViewModel = new FilesAndFoldersListViewModel(path);
+        if (getIntent().hasExtra("filter")) {
+            filterString = getIntent().getStringExtra("filter");
+            Log.i(TAG, "onCreate: " + filterString);
+            filter = new ExtensionFileFilter();
+            path = Environment.getExternalStorageDirectory().getAbsolutePath();
+            filesAndFoldersListViewModel = new FilesAndFoldersListViewModel(path, filter);
+            for(File file:filesAndFoldersListViewModel.getFileList()){
+                Log.i(TAG, "onCreate: "+file.getName());
+            }
+        } else {
+            Log.i(TAG, "onCreate: no filter");
+            path = Environment.getExternalStorageDirectory().getAbsolutePath();
+            filesAndFoldersListViewModel = new FilesAndFoldersListViewModel(path);
+            for(File file:filesAndFoldersListViewModel.getFileList()){
+                Log.i(TAG, "onCreate: "+file.getName());
+            }
+        }
         binding.setFilesAndFoldersListViewModel(filesAndFoldersListViewModel);
         binding.setLifecycleOwner(this);
         recyclerView = binding.folderList;
-
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(filesAndFoldersListViewModel.getAdapter());
 

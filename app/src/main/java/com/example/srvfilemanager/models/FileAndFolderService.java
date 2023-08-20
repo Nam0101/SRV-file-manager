@@ -5,6 +5,7 @@ import android.util.Log;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -15,11 +16,10 @@ public class FileAndFolderService {
     private static final String gB = " GB";
     private List<File> filesAndFolders;
     private File root;
-    private int imageResource;
+
 
     public FileAndFolderService(String path) {
         this.root = new File(path);
-        Log.d("FileAndFolderService", root.getName());
         if (root.isDirectory()) {
             File[] files = root.listFiles();
             if (files != null) {
@@ -28,26 +28,14 @@ public class FileAndFolderService {
                 this.filesAndFolders = new ArrayList<>();
             }
         } else {
-            this.filesAndFolders = Arrays.asList(root);
+            this.filesAndFolders = Collections.singletonList(root);
         }
-        List<File> pdfFiles = getPdfFiles();
-        for (File file : pdfFiles) {
-            Log.d("FileAndFolderService with PDF", file.getName());
+        for (File file : filesAndFolders) {
+            Log.d("FileAndFolderService", file.getAbsolutePath());
         }
-//        for(File file : filesAndFolders) {
-//            Log.d("FileAndFolderService", file.getName());
-//        }
 
     }
-    public List<File> getPdfFiles() {
-        List<File> pdfFiles = new ArrayList<>();
-        for (File file : filesAndFolders) {
-            if (file.isFile() && file.getName().endsWith(".pdf")) {
-                pdfFiles.add(file);
-            }
-        }
-        return pdfFiles;
-    }
+
     public String getFileName() {
         return root.getName();
     }
@@ -91,5 +79,9 @@ public class FileAndFolderService {
 
     public File getFileRoot() {
         return root;
+    }
+
+    public void setFilesAndFolders(List<File> fileList) {
+        this.filesAndFolders = fileList;
     }
 }

@@ -12,14 +12,17 @@ import com.example.srvfilemanager.ui.adapters.FileAndFoldersAdapter;
 import org.apache.commons.io.FilenameUtils;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
+
+import ultils.ExtensionFileFilter;
 
 public class FilesAndFoldersListViewModel extends BaseObservable {
     FileAndFolderService data;
-    private String src;
     private FileAndFoldersAdapter adapter;
     private List<File> fileList;
     private int imageUrl;
+    ExtensionFileFilter extensionFileFilter;
 
     public FilesAndFoldersListViewModel(String path) {
         super();
@@ -27,6 +30,24 @@ public class FilesAndFoldersListViewModel extends BaseObservable {
         this.fileList = data.getFilesAndFolders();
         this.adapter = new FileAndFoldersAdapter(fileList);
         notifyChange();
+    }
+
+    public FilesAndFoldersListViewModel(String path,ExtensionFileFilter extensionFileFilter) {
+        super();
+        this.extensionFileFilter = extensionFileFilter;
+        this.data = new FileAndFolderService(path);
+        this.fileList = filterFileList();
+        this.adapter = new FileAndFoldersAdapter(fileList);
+    }
+    public List<File> filterFileList(){
+        List<File> filteredFileList = new ArrayList<>();
+        List<File> fileList = data.getFilesAndFolders();
+        for (File file : fileList) {
+            if (extensionFileFilter.accept(file)) {
+                filteredFileList.add(file);
+            }
+        }
+        return filteredFileList;
     }
 
     @Bindable
@@ -96,6 +117,7 @@ public class FilesAndFoldersListViewModel extends BaseObservable {
     }
 
     public void setFileList(List<File> fileList) {
+        data.setFilesAndFolders(fileList);
         this.fileList = fileList;
         notifyChange();
     }
