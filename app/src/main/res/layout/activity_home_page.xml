@@ -167,6 +167,7 @@
                 android:layout_marginLeft="96dp"
                 android:layout_alignParentTop="true"
                 android:layout_marginTop="64dp"
+                android:onClick="@{()->HomePageViewModel.onClickImageFileFilter()}"
                 android:backgroundTint="#EBF2F8"
                 android:src="@mipmap/ic_button_image" />
             <TextView
@@ -187,6 +188,7 @@
                 android:layout_marginLeft="96dp"
                 android:layout_alignParentTop="true"
                 android:layout_marginTop="64dp"
+                android:onClick="@{()->HomePageViewModel.onClickVideoFileFilter()}"
                 android:backgroundTint="#F8EBF4"
                 />
             <TextView
@@ -206,6 +208,7 @@
                 android:layout_alignLeft="@id/btn_video"
                 android:layout_marginLeft="96dp"
                 android:layout_alignParentTop="true"
+                android:onClick="@{()->HomePageViewModel.onClickMusicFileFilter()}"
                 android:layout_marginTop="64dp"
                 android:backgroundTint="#F8F3EB"
                 />

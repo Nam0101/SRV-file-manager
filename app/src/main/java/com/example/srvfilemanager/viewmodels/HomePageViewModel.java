@@ -10,6 +10,10 @@ import com.example.srvfilemanager.models.StorageHelper;
 import com.example.srvfilemanager.ui.FolderActivity;
 
 public class HomePageViewModel extends BaseObservable {
+    private static final int DOCUMENTS = 0;
+    private static final int IMAGES = 1;
+    private static final int VIDEOS = 2;
+    private static final int MUSIC = 3;
     Context context;
     private String mUsedStorage;
     private String mAvailableStorage;
@@ -56,8 +60,26 @@ public class HomePageViewModel extends BaseObservable {
     }
     public void onClickDocumentFileFilter(){
         Intent intent = new Intent(context, FolderActivity.class);
-        intent.putExtra("filter",".png,.jpg,.srt");
+        intent.putExtra("filter", DOCUMENTS);
+        intent.putExtra("folderName", "Documents");
         context.startActivity(intent);
-
+    }
+    public void onClickImageFileFilter(){
+        Intent intent = new Intent(context, FolderActivity.class);
+        intent.putExtra("filter", IMAGES);
+        intent.putExtra("folderName", "Images");
+        context.startActivity(intent);
+    }
+    public void onClickVideoFileFilter(){
+        Intent intent = new Intent(context, FolderActivity.class);
+        intent.putExtra("filter", VIDEOS);
+        intent.putExtra("folderName", "Videos");
+        context.startActivity(intent);
+    }
+    public void onClickMusicFileFilter(){
+        Intent intent = new Intent(context, FolderActivity.class);
+        intent.putExtra("filter", MUSIC);
+        intent.putExtra("folderName", "Music");
+        context.startActivity(intent);
     }
 }

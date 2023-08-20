@@ -13,19 +13,23 @@ import com.example.srvfilemanager.databinding.ActivityFolderBinding;
 import com.example.srvfilemanager.viewmodels.FilesAndFoldersListViewModel;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 
+import ultils.AllFileInStorage;
 import ultils.ExtensionFileFilter;
 
 public class FolderActivity extends AppCompatActivity {
+    private static final int DOCUMENTS = 0;
+    private static final int IMAGES = 1;
+    private static final int VIDEOS = 2;
+    private static final int MUSIC = 3;
     String TAG = "FolderActivity";
     String path;
     FilesAndFoldersListViewModel filesAndFoldersListViewModel;
     ActivityFolderBinding binding;
     RecyclerView recyclerView;
-    String filterString;
     ExtensionFileFilter filter;
+    String folderName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,14 +38,17 @@ public class FolderActivity extends AppCompatActivity {
         binding = ActivityFolderBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         if (getIntent().hasExtra("filter")) {
-            filterString = getIntent().getStringExtra("filter");
-            Log.i(TAG, "onCreate: " + filterString);
-            filter = new ExtensionFileFilter();
-            path = Environment.getExternalStorageDirectory().getAbsolutePath();
-            filesAndFoldersListViewModel = new FilesAndFoldersListViewModel(path, filter);
-            for(File file:filesAndFoldersListViewModel.getFileList()){
-                Log.i(TAG, "onCreate: "+file.getName());
+            int filterType = getIntent().getIntExtra("filter", 0);
+            Log.i(TAG, "onCreate: " + filterType);
+            filter = new ExtensionFileFilter(filterType);
+            folderName = getIntent().getStringExtra("folderName");
+            AllFileInStorage allFileInStorage = new AllFileInStorage();
+            allFileInStorage.getAllFilesInStorage();
+            List<File> allFiles = allFileInStorage.getFileList();
+            for (File file : allFiles) {
+                Log.i(TAG, "File in storage: " + file.getName());
             }
+            filesAndFoldersListViewModel = new FilesAndFoldersListViewModel(allFiles, filter, folderName);
         } else {
             Log.i(TAG, "onCreate: no filter");
             path = Environment.getExternalStorageDirectory().getAbsolutePath();

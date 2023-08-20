@@ -11,6 +11,7 @@ import java.util.Objects;
 
 public class FileAndFolderService {
     private static final String items = " items | ";
+    private static final String B = " B";
     private static final String mB = " MB";
     private static final String kB = " kB";
     private static final String gB = " GB";
@@ -54,26 +55,26 @@ public class FileAndFolderService {
 
     public String getTotalStorage() {
         if (root.isDirectory()) {
-            long size = 0;
+            long fileSize = 0;
             for (File file : Objects.requireNonNull(root.listFiles())) {
-                size += file.length();
+                fileSize += file.length();
             }
-            if (size < 1024) {
-                return size + kB;
-            } else if (size < 1024 * 1024) {
-                return size / 1024 + mB;
-            } else {
-                return size / (1024 * 1024) + gB;
-            }
+            return getTotalFileSize(fileSize);
         } else {
             long size = root.length();
-            if (size < 1024) {
-                return size + kB;
-            } else if (size < 1024 * 1024) {
-                return size / 1024 + mB;
-            } else {
-                return size / (1024 * 1024) + gB;
-            }
+            return getTotalFileSize(size);
+        }
+    }
+    private String getTotalFileSize(long size){
+        if (size < 1000) {
+            return size + B;
+        } else if (size < 1000 * 1000) {
+            return size / 1000 + kB;
+        } else if(size < 1000 * 1000 * 1000){
+            return size / (1000 * 1000) + mB;
+        }
+        else {
+            return size / (1000 * 1000 * 1000) + gB;
         }
     }
 

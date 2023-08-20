@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     >
     <data>
+        <import type="android.view.View" />
         <variable
             name="FilesAndFoldersListViewModel"
             type="com.example.srvfilemanager.viewmodels.FilesAndFoldersListViewModel" />
@@ -17,6 +18,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.FolderActivity">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/nothing_to_show"
+            android:gravity="center"
+            android:visibility="@{FilesAndFoldersListViewModel.listEmpty ? View.VISIBLE : View.GONE}"
+            android:textSize="30sp"
+            android:textColor="#565454" />
         <TextView
             android:id="@+id/Folder"
             android:layout_width="wrap_content"
@@ -26,16 +36,17 @@
             android:layout_marginStart="32dp"
             android:layout_marginTop="32dp"
             android:layout_marginBottom="26dp"
-            android:text="@string/folder"
+            android:text="@{FilesAndFoldersListViewModel.folderName}"
             android:textColor="@color/black"
             android:textSize="30sp" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/folderList"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@id/Folder"
 
-            />
+            android:layout_marginTop="-6dp" />
 
         <ImageButton
             android:layout_width="wrap_content"
@@ -45,7 +56,7 @@
             android:layout_marginEnd="22dp"
             android:layout_marginBottom="79dp"
             android:background="@android:color/transparent"
-            android:src="@mipmap/ic_add" />
+            android:src="@mipmap/ic_add_folder" />
 
 
     </RelativeLayout>
