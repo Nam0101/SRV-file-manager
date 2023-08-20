@@ -25,6 +25,7 @@
                                               <map>
                                                 <entry key="color" value="000000" />
                                                 <entry key="imagePath" value="C:\Users\NamNV\AppData\Local\Temp\ic_android_black_24dp.xml" />
+                                                <entry key="opacityPercent" value="60" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -151,7 +152,8 @@
                                             <option name="values">
                                               <map>
                                                 <entry key="color" value="000000" />
-                                                <entry key="imagePath" value="D:\Dowload from chrome\IC_Kebab.svg" />
+                                                <entry key="imagePath" value="D:\Dowload from chrome\musical-note.png" />
+                                                <entry key="trimmed" value="true" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -187,8 +189,8 @@
                                       <entry key="backgroundColor" value="8d64fe" />
                                       <entry key="cropped" value="true" />
                                       <entry key="iconShape" value="NONE" />
-                                      <entry key="imageAsset" value="D:\Dowload from chrome\IC_Kebab.svg" />
-                                      <entry key="outputName" value="ic_menu" />
+                                      <entry key="imageAsset" value="D:\Dowload from chrome\musical-note.png" />
+                                      <entry key="outputName" value="ic_mucsic" />
                                     </map>
                                   </option>
                                 </PersistentState>

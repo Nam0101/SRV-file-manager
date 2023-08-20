@@ -45,8 +45,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void startHomePageActivity() {
-        Intent intent = new Intent(MainActivity.this, HomePageActivity.class);
+        Intent intent = new Intent(this,HomePageActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
+        finish();
     }
 
     @Override

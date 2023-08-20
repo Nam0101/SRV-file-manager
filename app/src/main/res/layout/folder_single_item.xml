@@ -5,12 +5,21 @@
             name="FilesAndFoldersListViewModel"
             type="com.example.srvfilemanager.viewmodels.FilesAndFoldersListViewModel" />
     </data>
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <androidx.cardview.widget.CardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginBottom="16dp"
+        android:layout_gravity="center"
+        android:elevation="100dp"
+        app:cardCornerRadius="30dp"
+        >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
         android:orientation="horizontal"
         android:background="@drawable/bo_goc">
 
@@ -20,7 +29,7 @@
             android:layout_weight="1.5"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:src="@mipmap/ic_folder"/>
+            app:srcCompat="@{FilesAndFoldersListViewModel.imageUrl}" />
 
         <LinearLayout
             android:layout_width="0dp"
@@ -36,7 +45,8 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:textSize="20dp"
-                android:text="Name" />
+                android:textStyle="bold"
+                android:text="@{FilesAndFoldersListViewModel.getRootName()}" />
 
             <LinearLayout
                 android:layout_marginBottom="10dp"
@@ -49,14 +59,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="20dp"
-                    android:text="test" />
+                    android:text="@{FilesAndFoldersListViewModel.getNumberOfFiles()}" />
 
                 <TextView
                     android:id="@+id/text_view_size"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="20dp"
-                    android:text="1" />
+                    android:text="@{FilesAndFoldersListViewModel.getTotalStorage()}" />
             </LinearLayout>
         </LinearLayout>
 
@@ -69,4 +79,6 @@
             android:backgroundTint="#F9F9F9"
             android:src="@mipmap/ic_menu" />
     </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
 </layout>

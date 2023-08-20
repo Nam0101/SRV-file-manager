@@ -7,6 +7,9 @@
         <variable
             name="FilesAndFoldersListViewModel"
             type="com.example.srvfilemanager.viewmodels.FilesAndFoldersListViewModel" />
+        <variable
+            name="HomePageViewModel"
+            type="com.example.srvfilemanager.viewmodels.HomePageViewModel" />
     </data>
     <RelativeLayout
         android:background="#FAFAFA"
@@ -18,12 +21,12 @@
             android:id="@+id/Folder"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:layout_marginLeft="32dp"
+            android:layout_marginStart="32dp"
             android:layout_marginTop="32dp"
             android:layout_marginBottom="26dp"
-            android:text="Folder"
+            android:text="@string/folder"
             android:textColor="@color/black"
             android:textSize="30sp" />
         <androidx.recyclerview.widget.RecyclerView
@@ -33,15 +36,18 @@
             android:layout_below="@id/Folder"
 
             />
+
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="16dp"
+            android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
+            android:layout_marginEnd="22dp"
+            android:layout_marginBottom="79dp"
             android:background="@android:color/transparent"
-            android:layout_marginBottom="32dp"
-            android:src="@mipmap/ic_add"
-            />
+            android:src="@mipmap/ic_add" />
+
+
     </RelativeLayout>
+
 </layout>

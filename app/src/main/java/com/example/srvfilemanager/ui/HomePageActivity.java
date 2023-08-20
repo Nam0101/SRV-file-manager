@@ -1,20 +1,15 @@
 package com.example.srvfilemanager.ui;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingUtil;
-
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
-import android.view.View;
 import android.widget.ImageButton;
-import android.widget.ProgressBar;
-import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
 
 import com.example.srvfilemanager.R;
-
 import com.example.srvfilemanager.databinding.ActivityHomePageBinding;
-import com.example.srvfilemanager.models.StorageHelper;
 import com.example.srvfilemanager.viewmodels.HomePageViewModel;
 
 
@@ -27,7 +22,7 @@ public class HomePageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
         ActivityHomePageBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_home_page);
-        homePageViewModel = new HomePageViewModel(Environment.getExternalStorageDirectory().getPath());
+        homePageViewModel = new HomePageViewModel(Environment.getExternalStorageDirectory().getPath(), this);
         binding.setHomePageViewModel(homePageViewModel);
         binding.setLifecycleOwner(this);
         mHomeButton = findViewById(R.id.btnHome);

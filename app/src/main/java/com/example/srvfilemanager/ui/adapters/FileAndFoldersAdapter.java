@@ -1,56 +1,68 @@
 package com.example.srvfilemanager.ui.adapters;
+
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.srvfilemanager.R;
+import com.example.srvfilemanager.databinding.FolderSingleItemBinding;
+import com.example.srvfilemanager.diffutil.FileAndFolderDiffUtil;
+import com.example.srvfilemanager.viewmodels.FilesAndFoldersListViewModel;
 
 import java.io.File;
-public class FileAndFoldersAdapter extends RecyclerView.Adapter<FileAndFoldersAdapter.FileViewHolder> {
-    private File[] filesAndFolders;
+import java.util.List;
 
-    public FileAndFoldersAdapter(File[] filesAndFolders) {
+public class FileAndFoldersAdapter extends RecyclerView.Adapter<FileAndFoldersAdapter.FileViewHolder> {
+    private List<File> filesAndFolders;
+
+    public FileAndFoldersAdapter(List<File> filesAndFolders) {
         this.filesAndFolders = filesAndFolders;
     }
+
     @NonNull
     @Override
     public FileAndFoldersAdapter.FileViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.folder_single_item,parent,false);
-        return new FileViewHolder(view);
+        LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
+        FolderSingleItemBinding folderSingleItemBinding = FolderSingleItemBinding.inflate(layoutInflater, parent, false);
+        return new FileViewHolder(folderSingleItemBinding);
     }
 
     @Override
+    public void onViewDetachedFromWindow(@NonNull FileAndFoldersAdapter.FileViewHolder holder) {
+        super.onViewDetachedFromWindow(holder);
+        holder.folderSingleItemBinding.unbind();
+
+    }
+    @Override
     public void onBindViewHolder(@NonNull FileAndFoldersAdapter.FileViewHolder holder, int position) {
-        File selectedFile = filesAndFolders[position];
-        if (selectedFile.isDirectory()) {
-            holder.mImageView.setImageResource(R.mipmap.ic_folder);
-            holder.mTextViewItemCount.setText(selectedFile.listFiles().length + " items");
-        } else {
-            holder.mImageView.setImageResource(R.mipmap.ic_button_doc);
-            holder.mTextViewItemCount.setText("");
-        }
+        File selectedFile = filesAndFolders.get(position);
+        FilesAndFoldersListViewModel filesAndFoldersListViewModel = new FilesAndFoldersListViewModel(selectedFile.getPath());
+        holder.folderSingleItemBinding.setFilesAndFoldersListViewModel(filesAndFoldersListViewModel);
     }
 
     @Override
     public int getItemCount() {
-        return filesAndFolders.length;
+        return filesAndFolders.size();
     }
 
     public class FileViewHolder extends RecyclerView.ViewHolder {
-        ImageView mImageView;
-        TextView mTextViewName,mTextViewItemCount,mTextViewSize;
+        FolderSingleItemBinding folderSingleItemBinding;
 
-        public FileViewHolder(View itemView) {
-            super(itemView);
-            mImageView = itemView.findViewById(R.id.image_view_folder_or_file);
-            mTextViewName = itemView.findViewById(R.id.text_view_name);
-            mTextViewItemCount = itemView.findViewById(R.id.text_view_count);
-            mTextViewSize = itemView.findViewById(R.id.text_view_size);
+        public FileViewHolder(FolderSingleItemBinding itemView) {
+            super(itemView.getRoot());
+            this.folderSingleItemBinding = itemView;
         }
     }
+    public void updateList(List<File> newList) {
+        FileAndFolderDiffUtil fileAndFolderDiffUtil = new FileAndFolderDiffUtil(filesAndFolders, newList);
+        DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(fileAndFolderDiffUtil);
+        filesAndFolders.clear();
+        filesAndFolders.addAll(newList);
+        diffResult.dispatchUpdatesTo(this);
+    }
+
+
+
 }
