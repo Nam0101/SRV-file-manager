@@ -70,14 +70,7 @@
             </LinearLayout>
         </LinearLayout>
 
-        <ImageButton
-            android:id="@+id/image_button_menu_three_dot"
-            android:layout_gravity="center_vertical"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
-            android:backgroundTint="#F9F9F9"
-            android:src="@mipmap/ic_menu" />
+
     </LinearLayout>
     </androidx.cardview.widget.CardView>
 

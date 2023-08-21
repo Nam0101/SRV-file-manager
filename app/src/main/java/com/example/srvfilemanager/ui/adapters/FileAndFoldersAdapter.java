@@ -1,5 +1,6 @@
 package com.example.srvfilemanager.ui.adapters;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -33,13 +34,37 @@ public class FileAndFoldersAdapter extends RecyclerView.Adapter<FileAndFoldersAd
     public void onViewDetachedFromWindow(@NonNull FileAndFoldersAdapter.FileViewHolder holder) {
         super.onViewDetachedFromWindow(holder);
         holder.folderSingleItemBinding.unbind();
-
     }
+
     @Override
     public void onBindViewHolder(@NonNull FileAndFoldersAdapter.FileViewHolder holder, int position) {
         File selectedFile = filesAndFolders.get(position);
         FilesAndFoldersListViewModel filesAndFoldersListViewModel = new FilesAndFoldersListViewModel(selectedFile.getPath());
         holder.folderSingleItemBinding.setFilesAndFoldersListViewModel(filesAndFoldersListViewModel);
+        holder.folderSingleItemBinding.executePendingBindings();
+        holder.folderSingleItemBinding.getRoot().setOnClickListener(v -> {
+            if (selectedFile.isDirectory()) {
+                filesAndFoldersListViewModel.openFolder(v.getContext(), selectedFile);
+                Log.i("FileAndFoldersAdapter", "onBindViewHolder: " + selectedFile.getName());
+            } else {
+                filesAndFoldersListViewModel.openFile(v.getContext(), selectedFile);
+                Log.i("FileAndFoldersAdapter", "onBindViewHolder: " + selectedFile.getName());
+            }
+        });
+        holder.folderSingleItemBinding.getRoot().setOnLongClickListener(v -> {
+            if (selectedFile.isDirectory()) {
+                filesAndFoldersListViewModel.showFolderPopupMenu(v.getContext(), selectedFile);
+          } else {
+               filesAndFoldersListViewModel.showFilePopupMenu(v.getContext(), selectedFile);
+            }
+            return false;
+        });
+    }
+
+    @Override
+    public void onViewRecycled(@NonNull FileAndFoldersAdapter.FileViewHolder holder) {
+        super.onViewRecycled(holder);
+        holder.folderSingleItemBinding.unbind();
     }
 
     @Override
@@ -47,7 +72,11 @@ public class FileAndFoldersAdapter extends RecyclerView.Adapter<FileAndFoldersAd
         return filesAndFolders.size();
     }
 
-    public class FileViewHolder extends RecyclerView.ViewHolder {
+    public void setFileList(List<File> fileList) {
+        this.filesAndFolders = fileList;
+    }
+
+    public static class FileViewHolder extends RecyclerView.ViewHolder {
         FolderSingleItemBinding folderSingleItemBinding;
 
         public FileViewHolder(FolderSingleItemBinding itemView) {
@@ -55,6 +84,7 @@ public class FileAndFoldersAdapter extends RecyclerView.Adapter<FileAndFoldersAd
             this.folderSingleItemBinding = itemView;
         }
     }
+
     public void updateList(List<File> newList) {
         FileAndFolderDiffUtil fileAndFolderDiffUtil = new FileAndFolderDiffUtil(filesAndFolders, newList);
         DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(fileAndFolderDiffUtil);
@@ -62,7 +92,5 @@ public class FileAndFoldersAdapter extends RecyclerView.Adapter<FileAndFoldersAd
         filesAndFolders.addAll(newList);
         diffResult.dispatchUpdatesTo(this);
     }
-
-
 
 }

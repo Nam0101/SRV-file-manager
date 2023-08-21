@@ -3,6 +3,10 @@ package com.example.srvfilemanager.ui;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
+import android.view.ContextMenu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -10,21 +14,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.srvfilemanager.R;
 import com.example.srvfilemanager.databinding.ActivityFolderBinding;
+import com.example.srvfilemanager.ultils.AllFileInStorage;
+import com.example.srvfilemanager.ultils.ExtensionFileFilter;
 import com.example.srvfilemanager.viewmodels.FilesAndFoldersListViewModel;
 
 import java.io.File;
 import java.util.List;
 
-import ultils.AllFileInStorage;
-import ultils.ExtensionFileFilter;
-
 public class FolderActivity extends AppCompatActivity {
-    private static final int DOCUMENTS = 0;
-    private static final int IMAGES = 1;
-    private static final int VIDEOS = 2;
-    private static final int MUSIC = 3;
     String TAG = "FolderActivity";
-    String path;
+    String path = Environment.getExternalStorageDirectory().getAbsolutePath();
     FilesAndFoldersListViewModel filesAndFoldersListViewModel;
     ActivityFolderBinding binding;
     RecyclerView recyclerView;
@@ -49,12 +48,19 @@ public class FolderActivity extends AppCompatActivity {
                 Log.i(TAG, "File in storage: " + file.getName());
             }
             filesAndFoldersListViewModel = new FilesAndFoldersListViewModel(allFiles, filter, folderName);
-        } else {
+        } else if (!getIntent().hasExtra("path")) {
             Log.i(TAG, "onCreate: no filter");
-            path = Environment.getExternalStorageDirectory().getAbsolutePath();
             filesAndFoldersListViewModel = new FilesAndFoldersListViewModel(path);
-            for(File file:filesAndFoldersListViewModel.getFileList()){
-                Log.i(TAG, "onCreate: "+file.getName());
+            for (File file : filesAndFoldersListViewModel.getFileList()) {
+                Log.i(TAG, "onCreate: " + file.getName());
+            }
+        } else {
+            Log.i(TAG, "onCreate: has path");
+            folderName = getIntent().getStringExtra("folderName");
+            path = getIntent().getStringExtra("path");
+            filesAndFoldersListViewModel = new FilesAndFoldersListViewModel(path, folderName);
+            for (File file : filesAndFoldersListViewModel.getFileList()) {
+                Log.i(TAG, "onCreate: " + file.getName());
             }
         }
         binding.setFilesAndFoldersListViewModel(filesAndFoldersListViewModel);
@@ -62,6 +68,40 @@ public class FolderActivity extends AppCompatActivity {
         recyclerView = binding.folderList;
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(filesAndFoldersListViewModel.getAdapter());
-
+        registerForContextMenu(recyclerView);
     }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        getMenuInflater().inflate(R.menu.popupmenu, menu);
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        super.onContextItemSelected(item);
+        if (item.getItemId() == R.id.itemRename) {
+            Toast.makeText(this, "Rename", Toast.LENGTH_SHORT).show();
+            return true;
+        }
+        if (item.getItemId() == R.id.itemDelete) {
+            Toast.makeText(this, "Delete", Toast.LENGTH_SHORT).show();
+            return true;
+        }
+        if (item.getItemId() == R.id.itemCopy) {
+            Toast.makeText(this, "Copy", Toast.LENGTH_SHORT).show();
+            return true;
+        }
+        if (item.getItemId() == R.id.itemZip) {
+            Toast.makeText(this, "Zip", Toast.LENGTH_SHORT).show();
+            return true;
+        }
+        if (item.getItemId() == R.id.itemCut) {
+            Toast.makeText(this, "Cut", Toast.LENGTH_SHORT).show();
+            return true;
+        }
+        return false;
+    }
+
+
 }

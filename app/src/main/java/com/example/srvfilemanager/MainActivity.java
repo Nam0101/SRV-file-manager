@@ -1,16 +1,15 @@
 package com.example.srvfilemanager;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageButton;
 
-import com.example.srvfilemanager.ui.HomePageActivity;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
-import ultils.PermissionRequest;
+import com.example.srvfilemanager.ui.HomePageActivity;
+import com.example.srvfilemanager.ultils.PermissionRequest;
 
 public class MainActivity extends AppCompatActivity {
     private final String TAG = "MainActivity";

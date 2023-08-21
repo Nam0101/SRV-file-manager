@@ -70,16 +70,22 @@ public class HomePageViewModel extends BaseObservable {
         intent.putExtra("folderName", "Images");
         context.startActivity(intent);
     }
-    public void onClickVideoFileFilter(){
+
+    public void onClickVideoFileFilter() {
         Intent intent = new Intent(context, FolderActivity.class);
         intent.putExtra("filter", VIDEOS);
         intent.putExtra("folderName", "Videos");
         context.startActivity(intent);
     }
-    public void onClickMusicFileFilter(){
+
+    public void onClickMusicFileFilter() {
         Intent intent = new Intent(context, FolderActivity.class);
         intent.putExtra("filter", MUSIC);
         intent.putExtra("folderName", "Music");
         context.startActivity(intent);
+    }
+
+    public void refreshList() {
+        notifyChange();
     }
 }

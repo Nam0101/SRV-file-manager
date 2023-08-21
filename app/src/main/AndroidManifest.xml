@@ -16,20 +16,28 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_folder"
         android:supportsRtl="true"
+        android:requestLegacyExternalStorage="true"
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         tools:targetApi="31">
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.example.srvfilemanager.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/filepaths" />
+        </provider>
+
         <activity
             android:name=".ui.FolderActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            android:exported="false">
-        </activity>
+            android:exported="false"></activity>
         <activity
             android:name=".ui.HomePageActivity"
-            android:exported="false"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+            android:exported="false" />
         <activity
             android:name=".MainActivity"
-            android:exported="true"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

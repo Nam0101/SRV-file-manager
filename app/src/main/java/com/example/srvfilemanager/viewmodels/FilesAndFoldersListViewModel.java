@@ -1,21 +1,32 @@
 package com.example.srvfilemanager.viewmodels;
 
-import android.util.Log;
 
+import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
+import android.util.Log;
+import android.view.MenuInflater;
+import android.view.View;
+import android.widget.ImageButton;
+
+import android.widget.Toast;
+
+import androidx.core.content.FileProvider;
 import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
 
 import com.example.srvfilemanager.R;
 import com.example.srvfilemanager.models.FileAndFolderService;
+import com.example.srvfilemanager.ui.FolderActivity;
 import com.example.srvfilemanager.ui.adapters.FileAndFoldersAdapter;
+import com.example.srvfilemanager.ultils.ExtensionFileFilter;
 
 import org.apache.commons.io.FilenameUtils;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-
-import ultils.ExtensionFileFilter;
+import java.util.Objects;
 
 public class FilesAndFoldersListViewModel extends BaseObservable {
 
@@ -23,8 +34,10 @@ public class FilesAndFoldersListViewModel extends BaseObservable {
     private FileAndFoldersAdapter adapter;
     private List<File> fileList;
     private int imageUrl;
+    ImageButton menuImageButton;
     ExtensionFileFilter extensionFileFilter;
     String folderName;
+
     public FilesAndFoldersListViewModel(String path) {
         super();
         this.data = new FileAndFolderService(path);
@@ -48,6 +61,14 @@ public class FilesAndFoldersListViewModel extends BaseObservable {
         this.extensionFileFilter = extensionFileFilter;
         this.fileList = fileList(fileList);
         this.adapter = new FileAndFoldersAdapter(this.fileList);
+    }
+
+    public FilesAndFoldersListViewModel(String path, String folderName) {
+        super();
+        this.folderName = folderName;
+        this.data = new FileAndFolderService(path);
+        this.fileList = data.getFilesAndFolders();
+        this.adapter = new FileAndFoldersAdapter(fileList);
     }
 
     public List<File> filterFileList() {
@@ -165,5 +186,41 @@ public class FilesAndFoldersListViewModel extends BaseObservable {
         data.setFilesAndFolders(fileList);
         this.fileList = fileList;
         notifyChange();
+    }
+
+    public void openFolder(Context context, File selectedFile) {
+        try {
+            FilesAndFoldersListViewModel filesAndFoldersListViewModel = new FilesAndFoldersListViewModel(selectedFile.getAbsolutePath());
+            adapter.setFileList(filesAndFoldersListViewModel.getFileList());
+            adapter.notifyDataSetChanged();
+            Intent intent = new Intent(context, FolderActivity.class);
+            intent.putExtra("path", selectedFile.getAbsolutePath());
+            intent.putExtra("folderName", selectedFile.getName());
+            context.startActivity(intent);
+        } catch (Exception e) {
+            Toast.makeText(context, "Can't open folder", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void openFile(Context context, File selectedFile) {
+        try {
+            Uri uri = FileProvider.getUriForFile(context, "com.example.srvfilemanager.fileprovider", selectedFile);
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setDataAndType(uri, "application/*");
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            Intent chooser = Intent.createChooser(intent, "Open file with");
+            context.startActivity(chooser);
+        } catch (Exception e) {
+            Log.e("error", Objects.requireNonNull(e.getMessage()));
+            Toast.makeText(context, "Can't open file", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void showFolderPopupMenu(Context context, File selectedFile) {
+        MenuInflater inflater = new MenuInflater(context);
+
+    }
+
+    public void showFilePopupMenu(Context context, File selectedFile) {
     }
 }

@@ -28,7 +28,6 @@ public class HomePageActivity extends AppCompatActivity {
         mHomeButton = findViewById(R.id.btnHome);
         mHomeButton.setOnClickListener(view -> Log.i(TAG,"Button clicked"));
         Log.e(TAG,"Path: "+Environment.getExternalStorageDirectory().getPath());
-        Log.i(TAG,"onCreate");
     }
 
     @Override
@@ -38,6 +37,8 @@ public class HomePageActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
+        homePageViewModel.refreshList();
+        Log.i(TAG, "onResume: ");
         super.onResume();
     }
 
