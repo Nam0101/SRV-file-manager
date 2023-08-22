@@ -31,10 +31,6 @@ public class FileAndFolderService {
         } else {
             this.filesAndFolders = Collections.singletonList(root);
         }
-        for (File file : filesAndFolders) {
-            Log.d("FileAndFolderService", file.getAbsolutePath());
-        }
-
     }
 
     public String getFileName() {
@@ -73,9 +69,7 @@ public class FileAndFolderService {
         } else if(size < 1000 * 1000 * 1000) {
             return size / (1000 * 1000) + mB;
         }
-        else {
-            return size / (1000 * 1000 * 1000) + gB;
-        }
+        return size / (1000 * 1000 * 1000) + gB;
     }
 
     public File getFileRoot() {

@@ -44,24 +44,16 @@ public class FolderActivity extends AppCompatActivity {
             AllFileInStorage allFileInStorage = new AllFileInStorage();
             allFileInStorage.getAllFilesInStorage();
             List<File> allFiles = allFileInStorage.getFileList();
-            for (File file : allFiles) {
-                Log.i(TAG, "File in storage: " + file.getName());
-            }
             filesAndFoldersListViewModel = new FilesAndFoldersListViewModel(allFiles, filter, folderName);
         } else if (!getIntent().hasExtra("path")) {
             Log.i(TAG, "onCreate: no filter");
             filesAndFoldersListViewModel = new FilesAndFoldersListViewModel(path);
-            for (File file : filesAndFoldersListViewModel.getFileList()) {
-                Log.i(TAG, "onCreate: " + file.getName());
-            }
+
         } else {
             Log.i(TAG, "onCreate: has path");
             folderName = getIntent().getStringExtra("folderName");
             path = getIntent().getStringExtra("path");
             filesAndFoldersListViewModel = new FilesAndFoldersListViewModel(path, folderName);
-            for (File file : filesAndFoldersListViewModel.getFileList()) {
-                Log.i(TAG, "onCreate: " + file.getName());
-            }
         }
         binding.setFilesAndFoldersListViewModel(filesAndFoldersListViewModel);
         binding.setLifecycleOwner(this);
@@ -72,36 +64,20 @@ public class FolderActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-        super.onCreateContextMenu(menu, v, menuInfo);
-        getMenuInflater().inflate(R.menu.popupmenu, menu);
+    protected void onStop() {
+        super.onStop();
+        Log.i(TAG, "onStop: ");
     }
 
     @Override
-    public boolean onContextItemSelected(MenuItem item) {
-        super.onContextItemSelected(item);
-        if (item.getItemId() == R.id.itemRename) {
-            Toast.makeText(this, "Rename", Toast.LENGTH_SHORT).show();
-            return true;
-        }
-        if (item.getItemId() == R.id.itemDelete) {
-            Toast.makeText(this, "Delete", Toast.LENGTH_SHORT).show();
-            return true;
-        }
-        if (item.getItemId() == R.id.itemCopy) {
-            Toast.makeText(this, "Copy", Toast.LENGTH_SHORT).show();
-            return true;
-        }
-        if (item.getItemId() == R.id.itemZip) {
-            Toast.makeText(this, "Zip", Toast.LENGTH_SHORT).show();
-            return true;
-        }
-        if (item.getItemId() == R.id.itemCut) {
-            Toast.makeText(this, "Cut", Toast.LENGTH_SHORT).show();
-            return true;
-        }
-        return false;
+    protected void onResume() {
+        super.onResume();
+        Log.i(TAG, "onResume:");
     }
 
-
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Log.i(TAG, "onRestart: ");
+    }
 }

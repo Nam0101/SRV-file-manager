@@ -2,10 +2,12 @@ package com.example.srvfilemanager.viewmodels;
 
 import android.content.Context;
 import android.content.Intent;
+import android.widget.Button;
 
 import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
 
+import com.example.srvfilemanager.R;
 import com.example.srvfilemanager.models.StorageHelper;
 import com.example.srvfilemanager.ui.FolderActivity;
 
@@ -54,17 +56,20 @@ public class HomePageViewModel extends BaseObservable {
         Intent intent = new Intent(context, FolderActivity.class);
         context.startActivity(intent);
     }
+
     public void onClickHome() {
         Intent intent = new Intent(context, FolderActivity.class);
         context.startActivity(intent);
     }
-    public void onClickDocumentFileFilter(){
+
+    public void onClickDocumentFileFilter() {
         Intent intent = new Intent(context, FolderActivity.class);
         intent.putExtra("filter", DOCUMENTS);
         intent.putExtra("folderName", "Documents");
         context.startActivity(intent);
     }
-    public void onClickImageFileFilter(){
+
+    public void onClickImageFileFilter() {
         Intent intent = new Intent(context, FolderActivity.class);
         intent.putExtra("filter", IMAGES);
         intent.putExtra("folderName", "Images");

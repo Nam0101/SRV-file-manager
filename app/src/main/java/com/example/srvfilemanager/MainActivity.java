@@ -1,7 +1,11 @@
 package com.example.srvfilemanager;
 
 import android.content.Intent;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.Settings;
 import android.util.Log;
 import android.widget.ImageButton;
 
@@ -20,14 +24,17 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mButton = findViewById(R.id.startButton);
-
-        if (PermissionRequest.checkPermission(this)) {
-            startHomePageActivity();
-        } else {
+        if (!Environment.isExternalStorageManager()){
             mButton.setOnClickListener(v -> {
-                PermissionRequest.requestPermission(this);
+                Intent intent = new Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION);
+                Uri uri = Uri.fromParts("package", getPackageName(), null);
+                intent.setData(uri);
+                startActivity(intent);
                 Log.i(TAG, "onCreate: Button Clicked");
             });
+        }
+        else{
+            startHomePageActivity();
         }
         Log.i(TAG, "onCreate: ");
     }
@@ -36,13 +43,12 @@ public class MainActivity extends AppCompatActivity {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         Log.i(TAG, "onRequestPermissionsResult: ");
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == PermissionRequest.REQUEST_CODE) {
-            if (PermissionRequest.checkPermission(this)) {
+        if (requestCode == PermissionRequest.REQUEST_CODE){
+            if (grantResults.length > 0 && grantResults[0] == getPackageManager().PERMISSION_GRANTED){
                 startHomePageActivity();
             }
         }
     }
-
     private void startHomePageActivity() {
         Intent intent = new Intent(this,HomePageActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -54,6 +60,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onRestart() {
         super.onRestart();
         Log.i(TAG, "onRestart: ");
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            if (Environment.isExternalStorageManager()){
+                startHomePageActivity();
+            }
+        }
     }
 
     @Override
