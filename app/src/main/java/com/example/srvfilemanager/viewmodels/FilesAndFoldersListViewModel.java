@@ -283,7 +283,28 @@ public class FilesAndFoldersListViewModel extends BaseObservable {
         newAlertDialog.show();
     }
 
-    public void reName() {
-        Log.i("Rename", "1");
+    public boolean addFolder(String path, String fileName) {
+        File file = new File(path + "/" + fileName);
+        if (file.mkdir()) {
+            List<File> updatedFileList = new ArrayList<>(fileList);
+            updatedFileList.add(file);
+            setFileList(updatedFileList);
+            int position = updatedFileList.indexOf(file);
+            this.adapter.notifyItemInserted(position);
+            this.adapter.setFileList(updatedFileList);
+            Log.i("Add folder", "Success " + position);
+            return true;
+        }
+        Log.i("Add folder", "Fail");
+        return false;
+    }
+
+
+    public void refreshList() {
+        // get file list from path and update adapter
+        List<File> updatedFileList = data.getFilesAndFolders();
+        setFileList(updatedFileList);
+        adapter.notifyDataSetChanged();
+
     }
 }

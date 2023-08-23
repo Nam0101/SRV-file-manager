@@ -11,7 +11,7 @@
             type="com.example.srvfilemanager.viewmodels.HomePageViewModel" />
     </data>
     <RelativeLayout
-        android:background="#FAFAFA"
+        android:background="#F1F5FE"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -43,20 +43,46 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@id/Folder"
-
-            android:layout_marginTop="-6dp" />
+            android:layout_marginTop="19dp" />
 
         <ImageButton
+            android:id="@+id/btn_add_folder"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginEnd="22dp"
-            android:layout_marginBottom="79dp"
+            android:layout_marginEnd="28dp"
+            android:layout_marginBottom="65dp"
             android:background="@android:color/transparent"
-            android:src="@mipmap/ic_add_folder" />
+            android:clickable="true"
+            android:src="@drawable/ic_add_folder" />
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:gravity="center"
+            android:orientation="horizontal"
+            >
+            <ImageButton
+                android:id="@+id/paste"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="90dp"
+                android:src="@mipmap/ic_paste"
+                android:backgroundTint="@color/white"
+                android:visibility="gone"
+                />
 
+            <ImageButton
+                android:id="@+id/cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/ic_cancel"
+                android:backgroundTint="@color/white"
+                android:visibility="gone"
+                />
+        </LinearLayout>
     </RelativeLayout>
 
 </layout>

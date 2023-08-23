@@ -86,6 +86,14 @@ public class FileAndFoldersAdapter extends RecyclerView.Adapter<FileAndFoldersAd
             if (menuItem.getTitle().equals("Delete")) {
                 handleDeleteFolder(selectedFile, v, position);
             }
+            if (menuItem.getTitle().equals("Rename")) {
+                handleRenameFolder(selectedFile, v, position);
+            }
+            if (menuItem.getTitle().equals("Copy")) {
+                handleCopyFile(selectedFile, v, position);
+            }
+            if(menuItem.getTitle().equals("Zip")){
+            }
             return false;
         });
     }
@@ -193,6 +201,14 @@ public class FileAndFoldersAdapter extends RecyclerView.Adapter<FileAndFoldersAd
             Toast.makeText(v.getContext(), "Renamed to "+ newNameFile.getName(), Toast.LENGTH_SHORT).show();
         });
         dialog.show();
+    }
+    private void handleCutFile(File selectedFile, View v, int position) {
+        Intent intent = new Intent(v.getContext(), FolderActivity.class);
+        intent.putExtra("cut", selectedFile.getPath());
+        v.getContext().startActivity(intent);
+    }
+    private void handleZipFile(File selectedFile, View v, int position) {
+
     }
 
     @Override

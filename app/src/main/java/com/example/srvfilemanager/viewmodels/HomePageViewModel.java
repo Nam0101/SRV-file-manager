@@ -4,10 +4,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.Button;
 
+import android.widget.SearchView;
 import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
+import androidx.databinding.BindingAdapter;
+import androidx.databinding.PropertyChangeRegistry;
 
-import com.example.srvfilemanager.R;
+import com.example.srvfilemanager.BR;
 import com.example.srvfilemanager.models.StorageHelper;
 import com.example.srvfilemanager.ui.FolderActivity;
 
@@ -21,6 +24,9 @@ public class HomePageViewModel extends BaseObservable {
     private String mAvailableStorage;
     private String mPercentString;
     private int mPercent;
+    private final PropertyChangeRegistry callbacks = new PropertyChangeRegistry();
+
+    private String searchQuery = "";
 
     public HomePageViewModel(String path, Context context) {
         super();
@@ -52,6 +58,19 @@ public class HomePageViewModel extends BaseObservable {
         return mPercent;
     }
 
+    @Bindable
+    public String getSearchQuery() {
+        return searchQuery;
+    }
+
+    @Bindable
+    public void setSearchQuery(String query) {
+        if (!searchQuery.equals(query)) {
+            searchQuery = query;
+            notifyPropertyChanged(BR.searchQuery);
+
+        }
+    }
     public void onClickFolder() {
         Intent intent = new Intent(context, FolderActivity.class);
         context.startActivity(intent);

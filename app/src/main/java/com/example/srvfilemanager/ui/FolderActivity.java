@@ -1,11 +1,16 @@
 package com.example.srvfilemanager.ui;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.os.Environment;
+import android.text.InputType;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -29,7 +34,7 @@ public class FolderActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     ExtensionFileFilter filter;
     String folderName;
-
+    ImageButton mAddFolderButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,7 +65,22 @@ public class FolderActivity extends AppCompatActivity {
         recyclerView = binding.folderList;
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(filesAndFoldersListViewModel.getAdapter());
-        registerForContextMenu(recyclerView);
+        mAddFolderButton = findViewById(R.id.btn_add_folder);
+        mAddFolderButton.setOnClickListener(view -> {
+            Log.i(TAG, "onCreate: click add folder");
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Add new folder");
+            final EditText input = new EditText(this);
+            input.setInputType(InputType.TYPE_CLASS_TEXT);
+            builder.setView(input);
+            builder.setPositiveButton("OK", (dialog, which) -> {
+                String folderName = input.getText().toString();
+                filesAndFoldersListViewModel.addFolder(path, folderName);//Toast.makeText(this, "Add folder successfully", Toast.LENGTH_SHORT).show();
+// Toast.makeText(this, "Add folder failed", Toast.LENGTH_SHORT).show();
+            });
+            builder.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
+            builder.show();
+        });
     }
 
     @Override
@@ -79,5 +99,6 @@ public class FolderActivity extends AppCompatActivity {
     protected void onRestart() {
         super.onRestart();
         Log.i(TAG, "onRestart: ");
+        filesAndFoldersListViewModel.refreshList();
     }
 }

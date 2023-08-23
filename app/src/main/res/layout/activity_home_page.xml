@@ -8,11 +8,12 @@
             name="HomePageViewModel"
             type="com.example.srvfilemanager.viewmodels.HomePageViewModel" />
     </data>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="@color/white"
+        android:background="#F1F5FE"
         tools:context=".ui.HomePageActivity">
         <!-- Search-->
         <RelativeLayout
@@ -21,6 +22,7 @@
             android:layout_weight="1.5">
 
             <TextView
+                android:id="@+id/good_morning"
                 android:layout_width="192dp"
                 android:layout_height="78dp"
                 android:layout_alignParentLeft="true"
@@ -32,17 +34,19 @@
                 android:textSize="30sp" />
 
             <SearchView
+                android:id="@+id/search_view"
                 android:layout_width="wrap_content"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
-                android:layout_alignParentRight="true"
-                android:layout_marginStart="32dp"
+                android:layout_alignParentEnd="true"
                 android:layout_marginTop="32dp"
                 android:layout_marginEnd="32dp"
-                android:layout_marginRight="32dp"
                 android:layout_marginBottom="32dp" />
 
+            <!--                app:query="@={HomePageViewModel.searchQuery}"-->
+
         </RelativeLayout>
+
         <RelativeLayout
             android:layout_weight="5"
             android:layout_width="match_parent"
@@ -95,9 +99,9 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tv_free_storage"
                 android:layout_marginLeft="32dp"
-                android:text="Free"
-                android:textColor="#494848"
-                />
+                android:layout_marginTop="0dp"
+                android:text="Used"
+                android:textColor="#494848" />
 
             <TextView
                 android:id="@+id/tv_used_storage"
@@ -118,7 +122,7 @@
                 android:layout_below="@id/tv_used_storage"
                 android:layout_alignParentRight="true"
                 android:layout_alignLeft="@id/tv_used_storage"
-                android:text="Used"
+                android:text="Free"
                 android:textColor="#494848"
                 />
         </RelativeLayout>
@@ -250,7 +254,7 @@
                 android:layout_height="wrap_content"
                 android:src="@mipmap/ic_home"
                 android:layout_marginRight="32dp"
-                android:background="@color/white"/>
+                android:backgroundTint="#F1F5FE" />
 
             <ImageButton
                 android:id="@+id/btnFolder"
@@ -258,15 +262,14 @@
                 android:layout_height="wrap_content"
                 android:src="@mipmap/ic_folder_home"
                 android:layout_marginRight="32dp"
-                android:onClick="@{() -> HomePageViewModel.onClickFolder()}"
-                android:background="@color/white"/>
-
+                android:backgroundTint="#F1F5FE"
+                android:onClick="@{() -> HomePageViewModel.onClickFolder()}" />
             <ImageButton
                 android:id="@+id/btnCloud"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/ic_cloud_fill"
-                android:background="@color/white"
+                android:backgroundTint="#F1F5FE"
+                android:src="@mipmap/ic_cloud_new"
                 />
         </LinearLayout>
     </LinearLayout>
