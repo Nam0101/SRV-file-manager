@@ -19,6 +19,7 @@ import com.example.srvfilemanager.R;
 import com.example.srvfilemanager.databinding.FolderSingleItemBinding;
 import com.example.srvfilemanager.diffutil.FileAndFolderDiffUtil;
 import com.example.srvfilemanager.ui.FolderActivity;
+import com.example.srvfilemanager.ultils.ZipFiles;
 import com.example.srvfilemanager.viewmodels.FilesAndFoldersListViewModel;
 
 import org.apache.commons.io.FileUtils;
@@ -26,8 +27,8 @@ import org.apache.commons.io.FilenameUtils;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
-
 public class FileAndFoldersAdapter extends RecyclerView.Adapter<FileAndFoldersAdapter.FileViewHolder> {
     private List<File> filesAndFolders;
 
@@ -92,7 +93,11 @@ public class FileAndFoldersAdapter extends RecyclerView.Adapter<FileAndFoldersAd
             if (menuItem.getTitle().equals("Copy")) {
                 handleCopyFile(selectedFile, v, position);
             }
-            if(menuItem.getTitle().equals("Zip")){
+            if (menuItem.getTitle().equals("Zip")) {
+                handleZipFolder(selectedFile, v, position);
+            }
+            if (menuItem.getTitle().equals("Cut")) {
+                handleCut(selectedFile, v, position);
             }
             return false;
         });
@@ -115,6 +120,9 @@ public class FileAndFoldersAdapter extends RecyclerView.Adapter<FileAndFoldersAd
             if (menuItem.getTitle().equals("Copy")) {
                 handleCopyFile(selectedFile, v, position);
             }
+            if (menuItem.getTitle().equals("Cut")) {
+                handleCut(selectedFile, v, position);
+            }
             return false;
 
         });
@@ -127,23 +135,20 @@ public class FileAndFoldersAdapter extends RecyclerView.Adapter<FileAndFoldersAd
         v.getContext().startActivity(intent);
     }
 
-//    private void handleCopyFile(File selectedFile, View v, int position,String newPath) {
-//
-//    }
 
     private void handleDeleteFile(File selectedFile, View v, int position) {
         AlertDialog.Builder dialog = new AlertDialog.Builder(v.getContext());
         dialog.setTitle("Delete " + selectedFile.getName());
         dialog.setCancelable(true);
         dialog.setPositiveButton("Delete", (dialogInterface, i) -> {
-            if(selectedFile.delete()){
+            if (selectedFile.delete()) {
                 Log.i("Delete", "handleDeleteFile: " + selectedFile.getName());
-                Toast.makeText(v.getContext(), "Deleted", Toast.LENGTH_SHORT).show();
-                filesAndFolders.remove(position);
+                filesAndFolders = removeAtPosition(position);
+                selectedFile.delete();
+                v.setVisibility(View.GONE);
                 notifyItemRemoved(position);
                 notifyItemRangeChanged(position, filesAndFolders.size());
-            }
-            else {
+            } else {
                 Toast.makeText(v.getContext(), "Failed to delete", Toast.LENGTH_SHORT).show();
             }
         });
@@ -157,7 +162,7 @@ public class FileAndFoldersAdapter extends RecyclerView.Adapter<FileAndFoldersAd
             try {
                 FileUtils.deleteDirectory(selectedFile);
                 Toast.makeText(v.getContext(), "Deleted", Toast.LENGTH_SHORT).show();
-                selectedFile.delete();
+                filesAndFolders = removeAtPosition(position);
                 v.setVisibility(View.GONE);
                 notifyItemRemoved(position);
                 notifyItemRangeChanged(position, filesAndFolders.size());
@@ -198,17 +203,35 @@ public class FileAndFoldersAdapter extends RecyclerView.Adapter<FileAndFoldersAd
             Log.d("Rename to", selectedFile.getAbsolutePath());
             filesAndFolders.set(position, newNameFile);
             updateListItem(position, v, editText.getText().toString());
-            Toast.makeText(v.getContext(), "Renamed to "+ newNameFile.getName(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(v.getContext(), "Renamed to " + newNameFile.getName(), Toast.LENGTH_SHORT).show();
         });
         dialog.show();
     }
-    private void handleCutFile(File selectedFile, View v, int position) {
+
+    private void handleCut(File selectedFile, View v, int position) {
         Intent intent = new Intent(v.getContext(), FolderActivity.class);
         intent.putExtra("cut", selectedFile.getPath());
         v.getContext().startActivity(intent);
     }
-    private void handleZipFile(File selectedFile, View v, int position) {
 
+    private void handleZipFolder(File selectedFolder, View v, int position) {
+        if (selectedFolder.isDirectory()) {
+            File zipFile = new File(selectedFolder.getParentFile(), selectedFolder.getName() + ".zip");
+            int i = 1;
+            while (zipFile.exists()) {
+                zipFile = new File(selectedFolder.getParentFile(), selectedFolder.getName() + "(" + i + ")" + ".zip");
+                i++;
+            }
+            try {
+                ZipFiles zipFiles = new ZipFiles();
+                zipFiles.zipDirectory(selectedFolder, zipFile.getAbsolutePath());
+                Toast.makeText(v.getContext(), "Zipped", Toast.LENGTH_SHORT).show();
+                filesAndFolders.add(zipFile);
+                notifyItemInserted(filesAndFolders.size() - 1);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @Override
@@ -235,11 +258,17 @@ public class FileAndFoldersAdapter extends RecyclerView.Adapter<FileAndFoldersAd
         }
     }
 
+    public void insetFile(File file) {
+        List<File> updateFile = new ArrayList<>(filesAndFolders);
+        updateFile.add(file);
+        updateList(updateFile);
+    }
+
     public void updateList(List<File> newList) {
         FileAndFolderDiffUtil fileAndFolderDiffUtil = new FileAndFolderDiffUtil(filesAndFolders, newList);
         DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(fileAndFolderDiffUtil);
-        filesAndFolders.clear();
-        filesAndFolders.addAll(newList);
+        this.filesAndFolders.clear();
+        this.filesAndFolders.addAll(newList);
         diffResult.dispatchUpdatesTo(this);
     }
 
@@ -248,5 +277,27 @@ public class FileAndFoldersAdapter extends RecyclerView.Adapter<FileAndFoldersAd
         textView.setVisibility(View.VISIBLE);
         textView.setText(fileName);
         notifyItemChanged(position);
+    }
+
+    private List<File> removeAtPosition(int position) {
+        List<File> updateList = new ArrayList<>();
+        for (int a = 0; a < filesAndFolders.size(); a++) {
+            if (a == position) {
+                continue;
+            }
+            updateList.add(filesAndFolders.get(a));
+        }
+        return updateList;
+    }
+
+    private List<File> addAtPosition(int position, File file) {
+        List<File> updateList = new ArrayList<>();
+        for (int a = 0; a < filesAndFolders.size(); a++) {
+            if (a == position) {
+                updateList.add(file);
+            }
+            updateList.add(filesAndFolders.get(a));
+        }
+        return updateList;
     }
 }

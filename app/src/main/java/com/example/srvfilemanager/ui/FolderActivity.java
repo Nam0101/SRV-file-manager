@@ -5,12 +5,9 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.text.InputType;
 import android.util.Log;
-import android.view.ContextMenu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,6 +21,9 @@ import com.example.srvfilemanager.ultils.ExtensionFileFilter;
 import com.example.srvfilemanager.viewmodels.FilesAndFoldersListViewModel;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
 
 public class FolderActivity extends AppCompatActivity {
@@ -34,7 +34,10 @@ public class FolderActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     ExtensionFileFilter filter;
     String folderName;
-    ImageButton mAddFolderButton;
+    static String cutPath, copyPath;
+    ImageButton btnPaste, btnCancel;
+    ImageButton mAddFolderButton, mPasteButton, mCancelButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,11 +57,25 @@ public class FolderActivity extends AppCompatActivity {
             Log.i(TAG, "onCreate: no filter");
             filesAndFoldersListViewModel = new FilesAndFoldersListViewModel(path);
 
-        } else {
+        } else if (getIntent().hasExtra("path")) {
             Log.i(TAG, "onCreate: has path");
             folderName = getIntent().getStringExtra("folderName");
             path = getIntent().getStringExtra("path");
             filesAndFoldersListViewModel = new FilesAndFoldersListViewModel(path, folderName);
+        }
+
+        if (getIntent().hasExtra("cut")) {
+            cutPath = getIntent().getStringExtra("cut");
+        } else if (getIntent().hasExtra("copy")) {
+            copyPath = getIntent().getStringExtra("copy");
+        }
+        btnPaste = findViewById(R.id.paste);
+        btnCancel = findViewById(R.id.cancel);
+        if (copyPath != null) {
+            handleCopy();
+        }
+        if (cutPath != null) {
+            handleCut();
         }
         binding.setFilesAndFoldersListViewModel(filesAndFoldersListViewModel);
         binding.setLifecycleOwner(this);
@@ -75,30 +92,105 @@ public class FolderActivity extends AppCompatActivity {
             builder.setView(input);
             builder.setPositiveButton("OK", (dialog, which) -> {
                 String folderName = input.getText().toString();
-                filesAndFoldersListViewModel.addFolder(path, folderName);//Toast.makeText(this, "Add folder successfully", Toast.LENGTH_SHORT).show();
-// Toast.makeText(this, "Add folder failed", Toast.LENGTH_SHORT).show();
+                filesAndFoldersListViewModel.addFolder(path, folderName);
             });
             builder.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
             builder.show();
         });
+
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        Log.i(TAG, "onStop: ");
+        Log.i(TAG, "onStop: " + path);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        Log.i(TAG, "onResume:");
+        Log.i(TAG, "onResume:" + path);
     }
 
     @Override
     protected void onRestart() {
         super.onRestart();
-        Log.i(TAG, "onRestart: ");
-        filesAndFoldersListViewModel.refreshList();
+        Log.i(TAG, "onRestart: " + path);
+        filesAndFoldersListViewModel.scanPathUpdate(path);
+        if (cutPath == null) {
+            btnPaste.setVisibility(View.GONE);
+            btnCancel.setVisibility(View.GONE);
+        }
+    }
+
+    private void handleCut() {
+        btnCancel.setVisibility(View.VISIBLE);
+        btnPaste.setVisibility(View.VISIBLE);
+        btnCancel.setOnClickListener(view -> {
+            cutPath = null;
+            btnCancel.setVisibility(View.GONE);
+            btnPaste.setVisibility(View.GONE);
+        });
+        btnPaste.setOnClickListener(view -> {
+            btnCancel.setVisibility(View.GONE);
+            btnPaste.setVisibility(View.GONE);
+            File newFile = new File(cutPath);
+            String newPath = path + "/" + newFile.getName();
+            File copyFile = new File(newPath);
+            try {
+                Files.move(newFile.toPath(), copyFile.toPath());
+            } catch (IOException e) {
+                Log.i(TAG, "Can not cut file");
+            }
+            cutPath = null;
+        });
+    }
+
+    private void handleCopy() {
+        btnCancel.setVisibility(View.VISIBLE);
+        btnPaste.setVisibility(View.VISIBLE);
+        btnCancel.setOnClickListener(view -> {
+            copyPath = null;
+            btnCancel.setVisibility(View.GONE);
+            btnPaste.setVisibility(View.GONE);
+        });
+        btnPaste.setOnClickListener(view -> {
+            btnCancel.setVisibility(View.GONE);
+            btnPaste.setVisibility(View.GONE);
+            File newFile = new File(copyPath);
+            String newPath = path + "/" + newFile.getName();
+            File copyFile = new File(newPath);
+            if (copyFile.exists()) {
+                Toast.makeText(this, "File already exists", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            if (newFile.isDirectory()) {
+                Log.i(TAG, "handleCopy: " + copyFile.getAbsolutePath());
+                copyFolder(newFile, copyFile);
+                return;
+            }
+            try {
+                Files.copy(newFile.toPath(), copyFile.toPath());
+            } catch (IOException e) {
+                Log.i(TAG, "Can not cut file");
+            }
+            copyPath = null;
+        });
+    }
+
+    private void copyFolder(File sourceFolder, File targetFolder) {
+        try {
+            Files.copy(sourceFolder.toPath(), targetFolder.toPath(), StandardCopyOption.REPLACE_EXISTING);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        if (sourceFolder.isDirectory()) {
+            File[] files = sourceFolder.listFiles();
+            for (File file : files) {
+                File copiedFile = new File(targetFolder.getAbsoluteFile() + "/" + file.getName());
+                Log.i("copy", "copyFolder: " + copiedFile.getAbsolutePath());
+                copyFolder(file, copiedFile);
+            }
+        }
     }
 }

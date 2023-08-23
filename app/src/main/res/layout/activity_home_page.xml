@@ -240,6 +240,11 @@
                 android:text="Recent"
                 android:textColor="@color/black"
                 android:textSize="28sp" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recentList"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="19dp" />
 
         </RelativeLayout>
         <LinearLayout

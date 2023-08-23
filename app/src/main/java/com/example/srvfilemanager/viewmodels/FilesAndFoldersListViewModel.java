@@ -10,7 +10,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import androidx.core.content.FileProvider;
@@ -181,6 +180,8 @@ public class FilesAndFoldersListViewModel extends BaseObservable {
             case "xlsx":
             case "xls":
                 return R.mipmap.ic_xlxs;
+            case "zip":
+                return R.mipmap.ic_zip;
         }
         return R.mipmap.ic_file;
     }
@@ -301,10 +302,26 @@ public class FilesAndFoldersListViewModel extends BaseObservable {
 
 
     public void refreshList() {
-        // get file list from path and update adapter
         List<File> updatedFileList = data.getFilesAndFolders();
         setFileList(updatedFileList);
         adapter.notifyDataSetChanged();
+    }
 
+    public void scanPathUpdate(String path) {
+        File file = new File(path);
+        if (file.isDirectory()) {
+            File[] files = file.listFiles();
+            if (files != null) {
+                this.fileList = new ArrayList<>();
+                for (File f : files) {
+                    this.fileList.add(f);
+                }
+            }
+        } else {
+            this.fileList = new ArrayList<>();
+            this.fileList.add(file);
+        }
+        adapter.setFileList(this.fileList);
+        adapter.notifyDataSetChanged();
     }
 }
