@@ -226,64 +226,6 @@ public class FilesAndFoldersListViewModel extends BaseObservable {
     }
 
 
-
-    public void showFilePopupMenu(File selectedFile, View v) {
-//        PopupMenu popupMenu= new PopupMenu(v.getContext(),v);
-//        popupMenu.getMenu().add("Rename");
-//        popupMenu.getMenu().add("Copy");
-//        popupMenu.getMenu().add("Cut");
-//        popupMenu.getMenu().add("Delete");
-//        popupMenu.setForceShowIcon(true);
-//        popupMenu.show();
-//        popupMenu.setOnMenuItemClickListener(menuItem -> {
-//            if(menuItem.getTitle().equals("Delete")){
-//                Uri uri = FileProvider.getUriForFile(v.getContext(), "com.example.srvfilemanager.fileprovider", selectedFile);
-//                try {
-//                    v.getContext().getContentResolver().delete(uri, selectedFile.getAbsolutePath(), null);
-//                    Log.i("Delete","Deleted");
-//                    v.setVisibility(View.GONE);
-//                }
-//                catch (Exception e){
-//                    Log.e("Delete", Objects.requireNonNull(e.getMessage()));
-//                }
-//            }
-//            if(menuItem.getTitle().equals("Rename")){
-//                AlertDialog.Builder dialog = new AlertDialog.Builder(v.getContext());
-//                dialog.setTitle("Enter new name for " +selectedFile.getName());
-//                dialog.setCancelable(true);
-//                final EditText editText=new EditText(v.getContext());
-//                dialog.setView(editText);
-//
-//                dialog.setPositiveButton("Rename", (dialogInterface, i) -> {
-//                    String mimeType = FilenameUtils.getExtension(selectedFile.getName());
-//                    File newNameFile = new File(selectedFile.getParent()+"/"+editText.getText().toString()+"."+mimeType);
-//                    selectedFile.renameTo(newNameFile);
-//                    Log.d("Rename",selectedFile.getName());
-//                    Log.d("Rename to",selectedFile.getAbsolutePath());
-//                    notifyChange();
-//                    v.setVisibility(View.VISIBLE);
-//                });
-//                dialog.show();
-//
-//
-//            }
-//            return false;
-//        });
-    }
-
-    public void onClickAddFolder() {
-
-        final AlertDialog.Builder newAlertDialog = new AlertDialog.Builder(contex.getApplicationContext());
-        newAlertDialog.setTitle("New Folder");
-        final EditText editText = new EditText(contex.getApplicationContext());
-        editText.setInputType(InputType.TYPE_CLASS_TEXT);
-        newAlertDialog.setView(editText);
-        Log.i("Test", "Onclick new Folder");
-        newAlertDialog.setPositiveButton("OK", (dialogInterface, i) -> {
-        });
-        newAlertDialog.show();
-    }
-
     public boolean addFolder(String path, String fileName) {
         File file = new File(path + "/" + fileName);
         if (file.mkdir()) {

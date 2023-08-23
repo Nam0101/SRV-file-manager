@@ -44,7 +44,9 @@ public class FolderActivity extends AppCompatActivity {
         setContentView(R.layout.activity_folder);
         binding = ActivityFolderBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        mAddFolderButton = findViewById(R.id.btn_add_folder);
         if (getIntent().hasExtra("filter")) {
+            mAddFolderButton.setVisibility(View.GONE);
             int filterType = getIntent().getIntExtra("filter", 0);
             Log.i(TAG, "onCreate: " + filterType);
             filter = new ExtensionFileFilter(filterType);
@@ -82,7 +84,6 @@ public class FolderActivity extends AppCompatActivity {
         recyclerView = binding.folderList;
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(filesAndFoldersListViewModel.getAdapter());
-        mAddFolderButton = findViewById(R.id.btn_add_folder);
         mAddFolderButton.setOnClickListener(view -> {
             Log.i(TAG, "onCreate: click add folder");
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -167,6 +168,7 @@ public class FolderActivity extends AppCompatActivity {
             if (newFile.isDirectory()) {
                 Log.i(TAG, "handleCopy: " + copyFile.getAbsolutePath());
                 copyFolder(newFile, copyFile);
+                copyPath = null;
                 return;
             }
             try {

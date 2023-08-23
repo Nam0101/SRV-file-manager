@@ -7,6 +7,9 @@
         <variable
             name="HomePageViewModel"
             type="com.example.srvfilemanager.viewmodels.HomePageViewModel" />
+        <variable
+            name="FilesAndFoldersListViewModel"
+            type="com.example.srvfilemanager.viewmodels.FilesAndFoldersListViewModel" />
     </data>
 
     <LinearLayout
@@ -240,11 +243,75 @@
                 android:text="Recent"
                 android:textColor="@color/black"
                 android:textSize="28sp" />
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recentList"
+            <androidx.cardview.widget.CardView
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="19dp" />
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:layout_below="@id/recent"
+                android:layout_gravity="center"
+                android:elevation="100dp"
+                app:cardCornerRadius="30dp"
+                >
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:orientation="horizontal"
+                    android:background="@drawable/bo_goc">
+
+                    <ImageView
+                        android:id="@+id/image_view_folder_or_file"
+                        android:layout_marginLeft="16dp"
+                        android:layout_weight="1.5"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        app:srcCompat="@mipmap/ic_xlxs" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="16dp"
+                        android:layout_weight="7"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/text_view_name"
+                            android:layout_marginTop="10dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:textSize="20dp"
+                            android:textStyle="bold"
+                            android:text="SRV intern list.xlsx"/>
+                        <LinearLayout
+                            android:layout_marginBottom="10dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:layout_weight="1">
+
+                            <TextView
+                                android:id="@+id/text_view_count"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="20dp"
+                                android:text="@{FilesAndFoldersListViewModel.getNumberOfFiles()}" />
+
+                            <TextView
+                                android:id="@+id/text_view_size"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="20dp"
+                                android:text="12MB" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
 
         </RelativeLayout>
         <LinearLayout
@@ -252,30 +319,69 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <ImageButton
+                    android:id="@+id/btnHome"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/ic_home"
+                    android:layout_marginRight="32dp"
+                    android:layout_marginBottom="-10dp"
+                    android:backgroundTint="#F1F5FE" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Home"
+                    android:textSize="16dp"
+                    android:layout_marginLeft="15dp"/>
 
-            <ImageButton
-                android:id="@+id/btnHome"
+            </LinearLayout>
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/ic_home"
-                android:layout_marginRight="32dp"
-                android:backgroundTint="#F1F5FE" />
+                android:orientation="vertical">
+                <ImageButton
+                    android:id="@+id/btnFolder"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/ic_folder_home"
+                    android:layout_marginRight="32dp"
+                    android:layout_marginBottom="-10dp"
+                    android:backgroundTint="#F1F5FE"
+                    android:onClick="@{() -> HomePageViewModel.onClickFolder()}" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Storage"
+                    android:textSize="16dp"
+                    android:layout_marginLeft="10dp"/>
 
-            <ImageButton
-                android:id="@+id/btnFolder"
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/ic_folder_home"
-                android:layout_marginRight="32dp"
-                android:backgroundTint="#F1F5FE"
-                android:onClick="@{() -> HomePageViewModel.onClickFolder()}" />
-            <ImageButton
-                android:id="@+id/btnCloud"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:backgroundTint="#F1F5FE"
-                android:src="@mipmap/ic_cloud_new"
-                />
+                android:orientation="vertical">
+
+                <ImageButton
+                    android:id="@+id/btnCloud"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="-10dp"
+                    android:backgroundTint="#F1F5FE"
+                    android:src="@mipmap/ic_cloud_new" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="@{() -> HomePageViewModel.onClickCloud()}"
+                    android:layout_marginLeft="15dp"
+                    android:text="Cloud"
+                    android:textSize="15dp" />
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 

@@ -34,7 +34,7 @@
             android:layout_marginStart="32dp"
             android:layout_marginTop="32dp"
             android:layout_marginBottom="26dp"
-            android:text='@{FilesAndFoldersListViewModel.folderName ?? "Folder"}'
+            android:text='@{FilesAndFoldersListViewModel.folderName ?? "Storage"}'
             android:textColor="@color/black"
             android:textSize="30sp" />
 

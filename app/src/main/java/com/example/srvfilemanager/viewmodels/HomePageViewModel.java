@@ -2,9 +2,13 @@ package com.example.srvfilemanager.viewmodels;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Environment;
+import android.util.Log;
 import android.widget.Button;
 
 import android.widget.SearchView;
+import android.widget.Toast;
+
 import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
 import androidx.databinding.BindingAdapter;
@@ -14,14 +18,26 @@ import com.example.srvfilemanager.BR;
 import com.example.srvfilemanager.models.StorageHelper;
 import com.example.srvfilemanager.ui.FolderActivity;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.FileVisitResult;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.attribute.BasicFileAttributes;
+import java.nio.file.attribute.FileTime;
+
 public class HomePageViewModel extends BaseObservable {
     private static final int DOCUMENTS = 0;
     private static final int IMAGES = 1;
     private static final int VIDEOS = 2;
     private static final int MUSIC = 3;
     Context context;
+    String TAG = "HomePageViewModel";
+    String recentFile;
     private String mUsedStorage;
     private String mAvailableStorage;
+    String path;
     private String mPercentString;
     private int mPercent;
     private final PropertyChangeRegistry callbacks = new PropertyChangeRegistry();
@@ -31,6 +47,7 @@ public class HomePageViewModel extends BaseObservable {
     public HomePageViewModel(String path, Context context) {
         super();
         this.context = context;
+        this.path = path;
         StorageHelper storageHelper = new StorageHelper(path);
         this.mAvailableStorage = storageHelper.getAvailableStorage();
         this.mUsedStorage = storageHelper.getUsedStorage();
@@ -75,6 +92,10 @@ public class HomePageViewModel extends BaseObservable {
         Intent intent = new Intent(context, FolderActivity.class);
         context.startActivity(intent);
     }
+    public void onClickCloud() {
+        Log.i(TAG, "onClickCloud: ");
+        Toast.makeText(context, "Cloud Storage is not implement yet", Toast.LENGTH_SHORT).show();
+    }
 
     public void onClickHome() {
         Intent intent = new Intent(context, FolderActivity.class);
@@ -112,4 +133,6 @@ public class HomePageViewModel extends BaseObservable {
     public void refreshList() {
         notifyChange();
     }
+
+
 }
